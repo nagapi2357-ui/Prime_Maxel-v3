@@ -1,0 +1,116 @@
+# JLCPCB 4-Layer PCB Design Rules
+# Based on: https://jlcpcb.com/capabilities/pcb-capabilities
+# Created: 2026-02-26 for Prime_Maxel-v3
+#
+# These rules enforce JLCPCB's manufacturing constraints.
+# Our net classes: Default (0.25mm), Power_Bulk (0.4mm), Torsion_Bridge (0.229mm)
+# All comfortably above JLCPCB minimums.
+
+(version 1)
+
+# =============================================================
+# MINIMUM TRACE WIDTH: 0.09mm (3.5mil)
+# Our minimum is Torsion_Bridge at 0.229mm — well above this
+# =============================================================
+(rule "JLCPCB Min Track Width"
+    (condition "A.Type == 'track'")
+    (constraint track_width (min 0.09mm))
+)
+
+# =============================================================
+# MINIMUM CLEARANCE: 0.09mm (3.5mil) trace-to-trace
+# Inner layers same as outer for 4-layer
+# =============================================================
+(rule "JLCPCB Min Clearance"
+    (condition "A.Type == 'track' && B.Type == 'track'")
+    (constraint clearance (min 0.09mm))
+)
+
+(rule "JLCPCB Min Pad Clearance"
+    (condition "A.Type == 'pad' && B.Type == 'pad'")
+    (constraint clearance (min 0.09mm))
+)
+
+(rule "JLCPCB Min Track-Pad Clearance"
+    (condition "A.Type == 'track' && B.Type == 'pad'")
+    (constraint clearance (min 0.09mm))
+)
+
+# =============================================================
+# VIA CONSTRAINTS
+# Min via drill: 0.2mm
+# Min via diameter (pad): 0.45mm (annular ring >= 0.125mm)
+# Our default: 0.6mm dia / 0.3mm drill — fine
+# =============================================================
+(rule "JLCPCB Min Via Drill"
+    (condition "A.Type == 'via'")
+    (constraint hole_size (min 0.2mm))
+)
+
+(rule "JLCPCB Min Via Diameter"
+    (condition "A.Type == 'via'")
+    (constraint via_diameter (min 0.45mm))
+)
+
+(rule "JLCPCB Min Annular Ring"
+    (condition "A.Type == 'via'")
+    (constraint annular_width (min 0.125mm))
+)
+
+# =============================================================
+# HOLE-TO-HOLE: 0.254mm (10mil) minimum
+# =============================================================
+(rule "JLCPCB Min Hole-to-Hole"
+    (condition "A.isPlated() && B.isPlated()")
+    (constraint hole_to_hole (min 0.254mm))
+)
+
+# =============================================================
+# COPPER TO BOARD EDGE: 0.3mm (for routed edges)
+# =============================================================
+(rule "JLCPCB Copper-to-Edge"
+    (condition "A.Type == 'track' || A.Type == 'pad' || A.Type == 'via'")
+    (constraint edge_clearance (min 0.3mm))
+)
+
+# =============================================================
+# SILKSCREEN
+# Min text height: 1.0mm
+# Min text width (stroke): 0.15mm
+# Silk-to-pad clearance: 0.15mm
+# =============================================================
+(rule "JLCPCB Min Silk Line Width"
+    (condition "A.Type == 'text' && (A.Layer == 'F.SilkS' || A.Layer == 'B.SilkS')")
+    (constraint silk_clearance (min 0.15mm))
+)
+
+# =============================================================
+# MINIMUM DRILL SIZE (PTH): 0.2mm
+# =============================================================
+(rule "JLCPCB Min PTH Drill"
+    (condition "A.isPlated()")
+    (constraint hole_size (min 0.2mm))
+)
+
+# =============================================================
+# MINIMUM NPTH DRILL: 0.5mm
+# =============================================================
+(rule "JLCPCB Min NPTH Drill"
+    (condition "!A.isPlated() && A.Type == 'pad'")
+    (constraint hole_size (min 0.5mm))
+)
+
+# =============================================================
+# SOLDER MASK
+# Min solder mask bridge: 0.1mm
+# Solder mask expansion: typically 0.05mm (set in board setup)
+# =============================================================
+
+# =============================================================
+# PAD SIZE CONSTRAINTS
+# Min SMD pad size: 0.25mm x 0.2mm
+# =============================================================
+(rule "JLCPCB Min SMD Pad"
+    (condition "A.Type == 'pad' && A.Pad_Type == 'smd'")
+    (constraint assertion "A.Size_X >= 0.25mm && A.Size_Y >= 0.2mm")
+)

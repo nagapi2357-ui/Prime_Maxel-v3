@@ -1,0 +1,17 @@
+# KiCad backups & autosaves
+*.bak
+*.bak.*
+*-backups/
+*~
+_autosave-*
+fp-info-cache
+
+# Exports (generated)
+exports/
+
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
