@@ -226,6 +226,10 @@
         {
           "diameter": 0.0,
           "drill": 0.0
+        },
+        {
+          "diameter": 0.55,
+          "drill": 0.5
         }
       ],
       "zones_allow_external_fillets": false,
@@ -547,6 +551,16 @@
       },
       {
         "clearance": 0.2,
+        "name": "I2C_Bus",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 2,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.25,
+        "via_diameter": 0.6,
+        "via_drill": 0.3
+      },
+      {
+        "clearance": 0.2,
         "name": "Power_Bulk",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "priority": 1,
@@ -591,6 +605,54 @@
       {
         "netclass": "Torsion_Bridge",
         "pattern": "PULSE_IN*"
+      },
+      {
+        "netclass": "I2C_Bus",
+        "pattern": "COL_SDA*"
+      },
+      {
+        "netclass": "I2C_Bus",
+        "pattern": "COL_SCL*"
+      },
+      {
+        "netclass": "I2C_Bus",
+        "pattern": "SDA*"
+      },
+      {
+        "netclass": "I2C_Bus",
+        "pattern": "SCL*"
+      },
+      {
+        "netclass": "I2C_Bus",
+        "pattern": "Net-(U1-SDA)"
+      },
+      {
+        "netclass": "I2C_Bus",
+        "pattern": "Net-(U1-SCL)"
+      },
+      {
+        "netclass": "Power_Bulk",
+        "pattern": "VCC"
+      },
+      {
+        "netclass": "Power_Bulk",
+        "pattern": "GND"
+      },
+      {
+        "netclass": "Power_Bulk",
+        "pattern": "AGND"
+      },
+      {
+        "netclass": "Power_Bulk",
+        "pattern": "DGND"
+      },
+      {
+        "netclass": "Power_Bulk",
+        "pattern": "VCC_PWT_plane"
+      },
+      {
+        "netclass": "Power_Bulk",
+        "pattern": "GND_PWT_plane"
       }
     ]
   },

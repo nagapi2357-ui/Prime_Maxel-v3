@@ -1,0 +1,58 @@
+** Drc report for Prime_Maxel-v3.kicad_pcb **
+** Created on 2026-02-12T19:29:34+0200 **
+
+** Found 8 DRC violations **
+[invalid_outline]: Board has malformed outline (no edges found on Edge.Cuts layer)
+    Local override; error
+    @(0.0000 mm, 0.0000 mm): PCB
+[lib_footprint_mismatch]: Footprint 'PinSocket_2x18_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'.
+    Local override; warning
+    @(134.5800 mm, -54.7000 mm): Footprint J8
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'.
+    Local override; warning
+    @(129.5000 mm, -120.7400 mm): Footprint J3
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'.
+    Local override; warning
+    @(129.5000 mm, -97.8800 mm): Footprint J4
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'.
+    Local override; warning
+    @(129.5000 mm, -75.0200 mm): Footprint J6
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x10_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'.
+    Local override; warning
+    @(177.7600 mm, -129.8840 mm): Footprint J2
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'.
+    Local override; warning
+    @(177.7600 mm, -102.9600 mm): Footprint J5
+[lib_footprint_mismatch]: Footprint 'PinSocket_1x08_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'.
+    Local override; warning
+    @(177.7600 mm, -80.1000 mm): Footprint J7
+
+** Found 6 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(129.5000 mm, -108.0400 mm): PTH pad 6 [GND_PWT] of J3
+    @(129.5000 mm, -105.5000 mm): PTH pad 7 [GND_PWT] of J3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(129.5000 mm, -105.5000 mm): PTH pad 7 [GND_PWT] of J3
+    @(134.5800 mm, -54.7000 mm): PTH pad 1 [GND_PWT] of J8
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(134.5800 mm, -52.1600 mm): PTH pad 2 [GND_PWT] of J8
+    @(134.5800 mm, -54.7000 mm): PTH pad 1 [GND_PWT] of J8
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(177.7600 mm, -122.2640 mm): PTH pad 4 [GND_PWT] of J2
+    @(129.5000 mm, -108.0400 mm): PTH pad 6 [GND_PWT] of J3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(177.7600 mm, -54.7000 mm): PTH pad 35 [+VCC_PWT] of J8
+    @(129.5000 mm, -110.5800 mm): PTH pad 5 [+VCC_PWT] of J3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(177.7600 mm, -52.1600 mm): PTH pad 36 [+VCC_PWT] of J8
+    @(177.7600 mm, -54.7000 mm): PTH pad 35 [+VCC_PWT] of J8
+
+** Found 0 Footprint errors **
+
+** End of Report **

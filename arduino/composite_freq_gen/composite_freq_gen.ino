@@ -1,0 +1,111 @@
+/*
+ * Composite Ratio Frequency Generator — Prime_Maxel-v3
+ * 
+ * EXPERIMENT 4: Control comparison for prime_freq_gen.
+ * Identical setup but uses COMPOSITE divisors instead of prime.
+ * 
+ * Base frequency: f₀ = 1024 Hz (same as prime version)
+ * Frequencies: f₀/4, f₀/6, f₀/8, f₀/9, f₀/10, f₀/12
+ * 
+ * Same pins, same Timer1 master at 2048 Hz, same bodge wires.
+ * Only the divisors change.
+ * 
+ *   Pin 22: f₀/4  = 256.0 Hz
+ *   Pin 24: f₀/6  = 170.7 Hz
+ *   Pin 26: f₀/8  = 128.0 Hz
+ *   Pin 28: f₀/9  = 113.8 Hz
+ *   Pin 30: f₀/10 = 102.4 Hz
+ *   Pin 32: f₀/12 = 85.3 Hz
+ */
+
+#define NUM_CHANNELS 6
+
+const uint8_t outPins[NUM_CHANNELS] = { 22, 24, 26, 28, 30, 32 };
+
+// Composite divisors (all non-prime)
+const uint8_t compositeDivisors[NUM_CHANNELS] = { 4, 6, 8, 9, 10, 12 };
+
+const float freqs[NUM_CHANNELS] = { 256.0, 170.67, 128.0, 113.78, 102.40, 85.33 };
+
+volatile uint8_t counters[NUM_CHANNELS];
+volatile uint8_t pinState[NUM_CHANNELS];
+
+ISR(TIMER1_COMPA_vect) {
+  for (uint8_t i = 0; i < NUM_CHANNELS; i++) {
+    counters[i]++;
+    if (counters[i] >= compositeDivisors[i]) {
+      counters[i] = 0;
+      pinState[i] ^= 1;
+      if (pinState[i]) {
+        *portOutputRegister(digitalPinToPort(outPins[i])) |= digitalPinToBitMask(outPins[i]);
+      } else {
+        *portOutputRegister(digitalPinToPort(outPins[i])) &= ~digitalPinToBitMask(outPins[i]);
+      }
+    }
+  }
+}
+
+void setup() {
+  Serial.begin(9600);
+  
+  Serial.println(F("============================================="));
+  Serial.println(F("  COMPOSITE Ratio Frequency Generator"));
+  Serial.println(F("  V3 Board — Experiment 4 Control"));
+  Serial.println(F("============================================="));
+  Serial.println();
+  
+  for (uint8_t i = 0; i < NUM_CHANNELS; i++) {
+    pinMode(outPins[i], OUTPUT);
+    digitalWrite(outPins[i], LOW);
+    counters[i] = 0;
+    pinState[i] = 0;
+    
+    Serial.print(F("  Pin "));
+    Serial.print(outPins[i]);
+    Serial.print(F(": f\xE2\x82\x80/"));
+    Serial.print(compositeDivisors[i]);
+    Serial.print(F(" = "));
+    Serial.print(freqs[i], 1);
+    Serial.println(F(" Hz"));
+  }
+  
+  Serial.println();
+  Serial.println(F("Same bodge wires as prime version."));
+  Serial.println();
+  
+  noInterrupts();
+  TCCR1A = 0;
+  TCCR1B = 0;
+  TCNT1 = 0;
+  OCR1A = 976;              // 16MHz / 8 / 977 = 2048 Hz
+  TCCR1B |= (1 << WGM12);  // CTC mode
+  TCCR1B |= (1 << CS11);   // Prescaler = 8
+  TIMSK1 |= (1 << OCIE1A); // Enable compare interrupt
+  interrupts();
+  
+  Serial.println(F("Timer started! Composite frequencies running."));
+  Serial.println(F("Measure with scope to verify."));
+  Serial.println();
+  Serial.println(F("Send 'S' to stop, 'R' to restart."));
+}
+
+void loop() {
+  if (Serial.available()) {
+    char c = Serial.read();
+    if (c == 'S' || c == 's') {
+      TIMSK1 &= ~(1 << OCIE1A);
+      for (uint8_t i = 0; i < NUM_CHANNELS; i++) {
+        digitalWrite(outPins[i], LOW);
+      }
+      Serial.println(F("Stopped."));
+    }
+    else if (c == 'R' || c == 'r') {
+      for (uint8_t i = 0; i < NUM_CHANNELS; i++) {
+        counters[i] = 0;
+        pinState[i] = 0;
+      }
+      TIMSK1 |= (1 << OCIE1A);
+      Serial.println(F("Restarted."));
+    }
+  }
+}

@@ -1,0 +1,30 @@
+* LM324 Op-Amp SPICE Subcircuit (simplified behavioural model)
+* Pins: 1=IN+, 2=IN-, 3=VCC, 4=VEE, 5=OUT
+* Based on TI LM324 datasheet parameters:
+*   GBW = 1.0 MHz, Slew Rate = 0.5 V/µs, Vos = 2mV typ
+*   Input bias current = 45nA, CMRR = 80dB
+*   Output swing: VEE+20mV to VCC-1.5V (single supply)
+*
+.subckt LM324 INp INm VCC VEE OUT
+* Input stage
+Rc1 VCC n1 7.957k
+Rc2 VCC n2 7.957k
+Q1 n1 INp n3 NPN_IN
+Q2 n2 INm n3 NPN_IN
+Ibias n3 VEE 20u
+* Gain stage
+Ga n4 VEE n1 n2 0.1m
+Ra n4 VEE 1e6
+Ca n4 VEE 159.2p
+* Output stage
+Eout n5 VEE n4 VEE 1
+Rout n5 OUT 75
+* Output clamp (single-supply rail limiting)
+Dhi OUT n6 DCLAMP
+Vhi VCC n6 1.5
+Dlo n7 OUT DCLAMP
+Vlo n7 VEE -0.02
+* Models
+.model NPN_IN NPN(BF=500 IS=1e-15 VAF=100)
+.model DCLAMP D(IS=1e-12 N=1)
+.ends LM324

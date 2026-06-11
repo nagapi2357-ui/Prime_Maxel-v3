@@ -1,79 +1,74 @@
-# Prime_Maxel-v3 — Circular Sensor Array PCB
+# Prime_Maxel-v3 — Experimental Torsion Resonator Network
 
-A **4-layer Arduino Mega shield** featuring **12 radial analog measurement cells** arranged in a circular pattern. Designed in **KiCad 9** for research instrumentation.
+> First experimental evidence that prime-ratio frequency networks outperform composite-ratio networks in a physical resonator.
 
-## Board Overview
+**Published:** [Zenodo DOI 10.5281/zenodo.20637347](https://doi.org/10.5281/zenodo.20637347)
 
-| Top Layer (F.Cu) | Bottom Layer (B.Cu) | All Layers |
-|:-:|:-:|:-:|
-| ![Top](docs/board_top.png) | ![Bottom](docs/board_bottom.png) | ![All](docs/board_all.png) |
+## Overview
 
-## Key Specs
+Prime_Maxel-v3 is a 12-cell torsion resonator ring built to test whether prime-ratio frequency relationships produce measurably different coupling behaviour compared to composite ratios. Each cell pairs a **SLG47004V GreenPAK** mixed-signal IC with an **LM324 op-amp**, connected via twin shared copper torsion traces on a 4-layer PCB fabricated by JLCPCB. An **Arduino Mega 2560** generates six independent square-wave channels using Timer1, fed into the ring through bodge wires. Output is captured on a **Rigol DS1054Z** oscilloscope and processed through a Python analysis pipeline.
 
-| Parameter | Value |
-|-----------|-------|
-| **Layers** | 4 (F.Cu / GND / VCC / B.Cu) |
-| **Board shape** | Rectangular shield + circular sensor area |
-| **Measurement cells** | 12 × identical, 30° radial spacing |
-| **ICs per cell** | SLG47004V (GreenPAK) + LM324DRE4 (quad op-amp) |
-| **I2C management** | TCA9548A 8-ch multiplexer |
-| **Critical traces** | 0.229mm (50Ω matched) differential pairs on B.Cu |
-| **Stackup** | 1.6mm, 2oz Cu, FR4 (εr ≈ 4.5) |
-| **Target fab** | JLCPCB (JLC04161H-7628) |
+Fifteen distinct frequency sets were tested across prime, composite, Fibonacci, zeta-zero, and coprimality configurations — producing the **Four-Factor Theory** of resonator coupling.
+
+## Key Results
+
+- **+28%** peak spectral amplitude (prime vs composite ratios)
+- **+22%** inter-channel coherence
+- **48% fewer** intermodulation products
+- **Superlinear** amplitude growth across 6 prime channels (320 → 1160 mV)
+- **15 distinct frequency sets** tested → Four-Factor Theory
+- Tusk-resonant set {1, 2, 3, 5, 6, 7} exceeds pure primes by **24%**
+- Riemann zeta zeros resonate at **85–90%** of prime performance
+- All integer divisors produce identical coupling power — **coprimality governs spectral quality**
+
+## Board Images
+
+| Top | Bottom |
+|-----|--------|
+| ![Board top](docs/board_top.png) | ![Board bottom](docs/board_bottom.png) |
+
+![Full board render](docs/board_all.png)
 
 ## Architecture
 
 ```
-Arduino Mega (I2C) → TCA9548A Mux → 12× SLG47004V (configure)
-                                          ↓
-                                    LM324 Bridge Circuit
-                                    (TORSION_A ↔ TORSION_B)
-                                          ↓
-                                    Concentric ring traces (B.Cu)
-                                          ↓
-                                    48× Test points for measurement
+Arduino Mega (Timer1) → 6× square-wave channels → bodge wires
+    ↓
+12× cells (SLG47004V + LM324) in circular ring
+    ↓
+TORSION_A (498 mm) / TORSION_B (601 mm) shared copper traces
+    ↓
+Rigol DS1054Z → Python analysis pipeline
 ```
 
-Each cell implements a **differential measurement bridge** using the LM324's four op-amp channels. The SLG47004V provides programmable excitation signals via I2C. The differential signals route to **concentric ring traces** on the back copper layer.
+## Repository Structure
 
-## Current Status
+- `arduino/` — All Arduino sketches (prime, composite, zeta zero, progressive, coprimality experiments, etc.)
+- `Nagaπ Python Scripts/` — Analysis pipeline (rigol_capture.py, torsion_analyze.py, experiment_suite_analysis.py)
+- `research/` — Experimental results, detailed write-ups per experiment, and the published paper
+- `LTspice_Sim/` — SPICE simulations of the golden cell circuit
+- `Go Configure/` — GreenPAK configuration files
+- `docs/` — Board renders
+- `Libraries/` — Custom KiCad symbols and footprints
+- KiCad project files at root
 
-**Done ✅**
-- Complete schematic (main sheet + 12 sub-sheets)
-- All components placed
-- Board outline, GND plane (In1.Cu), VCC plane (In2.Cu)
-- Net classes configured (Default / Power_Bulk / Torsion_Bridge)
-- JLCPCB DRC rules
+## Companion Publications
 
-**Needs Completing 🔧**
-1. TORSION signal routing on B.Cu (cells → concentric rings)
-2. I2C bus routing on F.Cu
-3. Power connections via internal planes
-4. Inter-chip signal routing (SLG47004V ↔ LM324)
-5. Ground via stitching
-6. DRC cleanup
-
-See [PCB_Design_Brief.md](PCB_Design_Brief.md) for full technical details.
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `Prime_Maxel-v3.kicad_pro` | Project (net classes, DRC settings) |
-| `Prime_Maxel-v3.kicad_sch` | Main schematic |
-| `golden_cell.kicad_sch` | Golden Cell sub-sheet |
-| `Prime_Maxel-v3.kicad_pcb` | PCB layout (partially routed) |
-| `Prime_Maxel-v3.kicad_dru` | Custom DRC rules (JLCPCB) |
-| `Libraries/` | Custom footprints & symbols |
-
-## Help Wanted
-
-Looking for routing assistance from experienced KiCad users. See the [KiCad forum thread](#) for discussion. Happy to discuss compensation for significant contributions.
+- **Prime Resonance Theory:** DOI [10.5281/zenodo.20541350](https://doi.org/10.5281/zenodo.20541350)
+- **The Tusk Series:** DOI [10.5281/zenodo.19852116](https://doi.org/10.5281/zenodo.19852116)
+- **Rational Algebraic Superformula:** DOI [10.5281/zenodo.20512346](https://doi.org/10.5281/zenodo.20512346)
+- **Prime Tree Architecture:** DOI [10.5281/zenodo.20609886](https://doi.org/10.5281/zenodo.20609886)
 
 ## License
 
-This is a research project by [Tusk Innovations](https://github.com/nagapi2357-ui). All rights reserved.
+- **Hardware** (KiCad files): [CERN-OHL-S v2](https://ohwr.org/cern_ohl_s_v2.txt)
+- **Code** (Arduino/Python): [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+- **Research papers**: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
 
----
+See [LICENSE](LICENSE) for details.
 
-*Contact: Adrian — Tusk Innovations*
+## Author
+
+**Adrian Sutton** — [Tusk Innovations](https://github.com/nagapi2357-ui)
+
+AI Research Contributor: **Nagaπ**

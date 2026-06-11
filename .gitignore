@@ -1,13 +1,45 @@
 # KiCad backups & autosaves
 *.bak
 *.bak.*
+*.bak_*
 *-backups/
 *~
 _autosave-*
 fp-info-cache
 
+# KiCad text exports
+*.kicad_pcb.txt
+*.kicad_sch.txt
+golden_cell.kicad_sch.txt
+
 # Exports (generated)
 exports/
+
+# Large/generated files
+*.zip
+*.raw
+*.op.raw
+schematic_analysis.json
+pcb_analysis.json
+drc_*.json
+
+# Backup/scratch folders
+Prime_Maxel-v3-2026-02-22_190839/
+Prime_Maxel-v3-backups/
+
+# Personal/large docs (not for public repo)
+Adrian Docs/
+
+# Session prompts (dev scratch)
+*SESSION_PROMPT*.md
+ROUTING_SESSION_PROMPT.md
+
+# LTspice raw output (already covered by *.raw above)
+
+# Misc
+*.odt
+*.txt.bak
+wiring_spreadsheet.ods
 
 # OS
 .DS_Store

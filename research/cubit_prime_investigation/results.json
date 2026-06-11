@@ -1,0 +1,161 @@
+{
+  "normalized_gaps": {
+    "mean": 1.0005134362776382,
+    "median": 0.7658849173797312,
+    "mode": 0.125,
+    "std": 0.8288459575334459,
+    "cubit": 0.5235586648398982,
+    "cubit_inv": 1.910005634814191,
+    "mean_matches_cubit": "False",
+    "note": "By PNT, mean of g/ln(p) \u2192 1.0"
+  },
+  "consecutive_ratios": {
+    "mean": 2.10864011507312,
+    "median": 1.0,
+    "mode": 2.005,
+    "frac_near_cubit": 0.0667507301636981,
+    "frac_near_cubit_inv": 0.0023052257300508446
+  },
+  "twin_prime_fraction": {
+    "1000": 0.20958083832335328,
+    "10000": 0.16693811074918566,
+    "100000": 0.12761964341570223,
+    "1000000": 0.10406767137597615,
+    "10000000": 0.08874804763323492,
+    "converges_to_cubit": false,
+    "note": "Twin prime fraction decreases with scale (~C/ln(N)), passes through 0.5236 but does not converge to it."
+  },
+  "record_gaps": {
+    "count": 22,
+    "mean_successive_ratio": 1.299229731726859,
+    "median_successive_ratio": 1.1818181818181819,
+    "phi": 1.618033988749895,
+    "ratios": [
+      2.0,
+      2.0,
+      1.5,
+      1.3333333333333333,
+      1.75,
+      1.2857142857142858,
+      1.1111111111111112,
+      1.1,
+      1.5454545454545454,
+      1.0588235294117647,
+      1.2222222222222223,
+      1.1818181818181819,
+      1.3846153846153846,
+      1.1944444444444444,
+      1.1162790697674418,
+      1.1666666666666667,
+      1.0178571428571428,
+      1.0350877192982457,
+      1.11864406779661,
+      1.121212121212121,
+      1.0405405405405406
+    ],
+    "gaps": [
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        7,
+        4
+      ],
+      [
+        23,
+        6
+      ],
+      [
+        89,
+        8
+      ],
+      [
+        113,
+        14
+      ],
+      [
+        523,
+        18
+      ],
+      [
+        887,
+        20
+      ],
+      [
+        1129,
+        22
+      ],
+      [
+        1327,
+        34
+      ],
+      [
+        9551,
+        36
+      ],
+      [
+        15683,
+        44
+      ],
+      [
+        19609,
+        52
+      ],
+      [
+        31397,
+        72
+      ],
+      [
+        155921,
+        86
+      ],
+      [
+        360653,
+        96
+      ],
+      [
+        370261,
+        112
+      ],
+      [
+        492113,
+        114
+      ],
+      [
+        1349533,
+        118
+      ],
+      [
+        1357201,
+        132
+      ],
+      [
+        2010733,
+        148
+      ],
+      [
+        4652353,
+        154
+      ]
+    ]
+  },
+  "zeta_spacings": {
+    "num_zeros": 500,
+    "mean_normalized": 1.0,
+    "median_normalized": 0.9075273021134802,
+    "mode_normalized": 0.8699999999999999,
+    "note": "GUE Wigner surmise mode \u2248 0.78; cubit 0.5236 does not match"
+  },
+  "statistical_tests": {
+    "ks_stat": 0.13487005930216064,
+    "ks_pvalue": 0.0,
+    "mean_z_vs_cubit": 469.1117968302871,
+    "cubit_percentile_in_ratios": 31.84296176364816,
+    "conclusion": "The mean of g/ln(p) converges to 1.0 (PNT), not to cubit. The cubit value 0.5236 does not appear as any distinguished feature. Under Cram\u00e9r model, 0.5236 is approximately the 41st percentile of Exp(1) \u2014 unremarkable."
+  }
+}

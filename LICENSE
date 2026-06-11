@@ -1,0 +1,23 @@
+Prime_Maxel-v3 — Dual License
+
+Copyright (c) 2025–2026 Adrian Sutton / Tusk Innovations
+
+This project uses a dual-licensing model:
+
+1. HARDWARE (KiCad schematics, PCB layout, footprints, symbols)
+   Licensed under the CERN Open Hardware Licence Version 2 — Strongly Reciprocal
+   (CERN-OHL-S v2)
+   Full text: https://ohwr.org/cern_ohl_s_v2.txt
+
+2. SOFTWARE (Arduino sketches, Python scripts)
+   Licensed under the Apache License, Version 2.0
+   Full text: https://www.apache.org/licenses/LICENSE-2.0
+
+3. RESEARCH (papers, write-ups, experimental data in research/)
+   Licensed under Creative Commons Attribution-ShareAlike 4.0 International
+   (CC BY-SA 4.0)
+   Full text: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+If you use this work, please cite the published paper:
+  DOI: 10.5281/zenodo.20637347
+  https://doi.org/10.5281/zenodo.20637347

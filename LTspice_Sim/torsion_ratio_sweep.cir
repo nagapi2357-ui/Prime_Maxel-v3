@@ -1,0 +1,100 @@
+* Prime_Maxel-v3: Torsion Ratio Sensitivity Analysis
+* Purpose: Sweep TORSION_B length while keeping A fixed
+*          Compare behaviour at ratio=1.182 (13/11) vs 1.206 (current)
+*
+* Uses .step to sweep the B/A ratio from 1.0 to 1.3
+*
+*==============================================================
+* PARAMETERS
+*==============================================================
+.param VCC=12
+.param VREG=5
+.param F_BASE=500k
+.param F1={F_BASE/13}
+.param F2={F_BASE/11}
+.param TA_LEN=497.97m        ; Fixed: TORSION_A = 497.97mm
+.param RATIO=1.18182         ; Will be stepped
+.param TB_LEN={TA_LEN*RATIO} ; TORSION_B = A × ratio
+.param TA_SEG={TA_LEN/12}
+.param TB_SEG={TB_LEN/12}
+.param Z0=50
+.param VEL=177.4e6           ; Velocity on FR4 microstrip (m/s), εeff≈2.85
+.param TD_A={TA_SEG/VEL}
+.param TD_B={TB_SEG/VEL}
+*
+*==============================================================
+* POWER
+*==============================================================
+VCC vcc 0 {VCC}
+VREG vreg 0 {VREG}
+VMID vmid 0 {VREG/2}
+*
+*==============================================================
+* TWO-CELL MODEL (simplified for sweep speed)
+* Cell A (1/13) and Cell B (1/11) — the torsion bridge pair
+*==============================================================
+*
+* GreenPAK oscillators
+V_OA_A oa_a 0 PULSE(0.5 4.5 0 10n 10n {0.5/F1} {1/F1})
+V_OA_B oa_b 0 PULSE(0.5 4.5 0 10n 10n {0.5/F2} {1/F2})
+*
+* Centre pulse
+V_PULSE pulse_in 0 PULSE(0 5 50u 10n 10n 1u 0)
+*
+.include LM324.sub
+*
+* --- Cell A: Buffer + Gain ---
+XUA_buf oa_a bufa vreg 0 bufa LM324
+RbufA bufa 0 100k
+*
+RgAi gainA_in 0 10k
+RgAf gainA_fb gainA_out 90k
+XUA_gain oa_a gainA_fb vreg 0 gainA_out LM324
+*
+XUA_comp gainA_out vmid vreg 0 compA LM324
+RcompA compA 0 100k
+*
+* --- Cell B: Buffer + Gain ---
+XUB_buf oa_b bufb vreg 0 bufb LM324
+RbufB bufb 0 100k
+*
+RgBi gainB_in 0 10k
+RgBf gainB_fb gainB_out 90k
+XUB_gain oa_b gainB_fb vreg 0 gainB_out LM324
+*
+XUB_comp gainB_out vmid vreg 0 compB LM324
+RcompB compB 0 100k
+*
+*==============================================================
+* TORSION TRACES — A path and B path between cells
+*==============================================================
+* TORSION_A: Cell_A → Cell_B
+T_A compA 0 ta_recv 0 Z0={Z0} TD={TD_A}
+Rta_term ta_recv 0 {Z0}
+Rta_coup ta_recv gainB_in 1k
+*
+* TORSION_B: Cell_B → Cell_A
+T_B compB 0 tb_recv 0 Z0={Z0} TD={TD_B}
+Rtb_term tb_recv 0 {Z0}
+Rtb_coup tb_recv gainA_in 1k
+*
+* Decoupling
+C1 vreg 0 100n
+C2 vreg 0 100n
+*
+*==============================================================
+* SIMULATION
+*==============================================================
+.tran 0 200u 0 10n
+*
+* Step the ratio to compare target vs actual
+.step param RATIO list 1.0 1.10 1.18182 1.206 1.25 1.30
+*
+* Measurements
+.meas TRAN peak_A MAX V(bufa) FROM=100u TO=200u
+.meas TRAN peak_B MAX V(bufb) FROM=100u TO=200u
+.meas TRAN peak_tA MAX V(ta_recv) FROM=50u TO=60u
+.meas TRAN peak_tB MAX V(tb_recv) FROM=50u TO=60u
+.meas TRAN ratio_meas PARAM peak_B/peak_A
+*
+.end
