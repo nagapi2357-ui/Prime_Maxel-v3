@@ -1,6 +1,8 @@
 # Prime_Maxel-v3 — Experimental Torsion Resonator Network
 
-> First experimental evidence that prime-ratio frequency networks outperform composite-ratio networks in a physical resonator.
+> **⚠️ CORRIGENDUM (19 September 2026):** The results reported below have not been reproduced in a subsequent pre-registered replication experiment (Plan C) using pure sine waves. Seven of eight metrics returned null; the original effects are attributed to a harmonic confound from square-wave signal generation. See the [full corrigendum](https://github.com/nagapi2357-ui/pwt-v3-data/blob/main/CORRIGENDUM.md) for details. The original data and claims are preserved below for transparency.
+
+~~First experimental evidence that prime-ratio frequency networks outperform composite-ratio networks in a physical resonator.~~
 
 **Published:** [Zenodo DOI 10.5281/zenodo.20637347](https://doi.org/10.5281/zenodo.20637347)
 
@@ -10,16 +12,18 @@ Prime_Maxel-v3 is a 12-cell torsion resonator ring built to test whether prime-r
 
 Fifteen distinct frequency sets were tested across prime, composite, Fibonacci, zeta-zero, and coprimality configurations — producing the **Four-Factor Theory** of resonator coupling.
 
-## Key Results
+## Key Results (Original — See Corrigendum)
 
-- **+28%** peak spectral amplitude (prime vs composite ratios)
-- **+22%** inter-channel coherence
-- **48% fewer** intermodulation products
-- **Superlinear** amplitude growth across 6 prime channels (320 → 1160 mV)
+> ⚠️ These results have not been reproduced under controlled conditions. The effects are most likely due to odd-harmonic content in the square-wave signals, not the arithmetic properties of the frequency ratios. A [pre-registered replication](https://github.com/nagapi2357-ui/pwt-v3-data/blob/main/CORRIGENDUM.md) using pure sine waves returned null on amplitude, coherence, and cross-correlation.
+
+- ~~**+28%**~~ peak spectral amplitude (prime vs composite ratios)
+- ~~**+22%**~~ inter-channel coherence
+- ~~**48% fewer**~~ intermodulation products
+- **Superlinear** amplitude growth across 6 prime channels (320 → 1160 mV) — *not retested*
 - **15 distinct frequency sets** tested → Four-Factor Theory
-- Tusk-resonant set {1, 2, 3, 5, 6, 7} exceeds pure primes by **24%**
-- Riemann zeta zeros resonate at **85–90%** of prime performance
-- All integer divisors produce identical coupling power — **coprimality governs spectral quality**
+- Tusk-resonant set {1, 2, 3, 5, 6, 7} exceeds pure primes by **24%** — *not retested*
+- Riemann zeta zeros resonate at **85–90%** of prime performance — *not retested*
+- All integer divisors produce identical coupling power — **coprimality governs spectral quality** — *not retested*
 
 ## Board Images
 
